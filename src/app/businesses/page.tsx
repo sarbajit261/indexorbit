@@ -26,6 +26,37 @@ const businessTypes = [
   { slug: 'entertainment', name: 'Entertainment', icon: '🎭' },
 ];
 
+// Icon mapping for categories based on business type
+const getCategoryIcon = (iconName: string | null, businessTypeSlug: string) => {
+  const iconMap: Record<string, any> = {
+    utensils: Utensils,
+    home: Home,
+    'shopping-bag': ShoppingBag,
+    wrench: Wrench,
+    scissors: Scissors,
+    dumbbell: Dumbbell,
+    car: Car,
+    stethoscope: Stethoscope,
+    'graduation-cap': GraduationCap,
+    briefcase: Briefcase,
+    factory: Factory,
+    plane: Plane,
+    building: Building,
+    coffee: Coffee,
+    heart: Heart,
+    scale: Scale,
+    camera: Camera,
+    music: Music,
+    hammer: Hammer,
+    default: Building,
+  };
+
+  if (iconName && iconMap[iconName]) {
+    return iconMap[iconName];
+  }
+  return iconMap[businessTypeSlug] || iconMap.default;
+};
+
 function BusinessListContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -36,6 +67,8 @@ function BusinessListContent() {
   const [featuredBusinesses, setFeaturedBusinesses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [featuredLoading, setFeaturedLoading] = useState(true);
+  const [popularCategories, setPopularCategories] = useState<any[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 12,
@@ -71,6 +104,22 @@ function BusinessListContent() {
       }
     }
     fetchFeatured();
+  }, []);
+
+  // Fetch popular categories
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await fetch('/api/categories?limit=8');
+        const data = await res.json();
+        setPopularCategories(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Failed to fetch categories:', error);
+      } finally {
+        setCategoriesLoading(false);
+      }
+    }
+    fetchCategories();
   }, []);
 
   // Fetch businesses
@@ -167,114 +216,21 @@ function BusinessListContent() {
               </Link>
             </div>
             <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide pb-2">
-              <Link
-                href="/business-category/restaurants"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Utensils className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Restaurants</span>
-              </Link>
-              <Link
-                href="/business-category/hotels"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Building className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Hotels</span>
-              </Link>
-              <Link
-                href="/business-category/shopping"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <ShoppingBag className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Shopping</span>
-              </Link>
-              <Link
-                href="/business-category/cafes"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Coffee className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Cafes</span>
-              </Link>
-              <Link
-                href="/business-category/healthcare"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Heart className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Healthcare</span>
-              </Link>
-              <Link
-                href="/business-category/fitness"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Dumbbell className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Fitness</span>
-              </Link>
-              <Link
-                href="/business-category/automotive"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Car className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Automotive</span>
-              </Link>
-              <Link
-                href="/business-category/salons"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Scissors className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Salons</span>
-              </Link>
-              <Link
-                href="/business-category/education"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <GraduationCap className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Education</span>
-              </Link>
-              <Link
-                href="/business-category/real-estate"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Home className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Real Estate</span>
-              </Link>
-              <Link
-                href="/business-category/legal"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Scale className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Legal</span>
-              </Link>
-              <Link
-                href="/business-category/home-services"
-                className="flex flex-col items-center gap-2 min-w-[90px] group"
-              >
-                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                  <Wrench className="h-6 w-6 text-gray-600" />
-                </div>
-                <span className="text-sm text-gray-700 text-center">Home Services</span>
-              </Link>
+              {popularCategories.map((cat: any) => {
+                const IconComponent = getCategoryIcon(cat.icon, cat.businessType?.slug || '');
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/business-category/${cat.slug}`}
+                    className="flex flex-col items-center gap-2 min-w-[90px] group"
+                  >
+                    <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                      <IconComponent className="h-6 w-6 text-gray-600" />
+                    </div>
+                    <span className="text-sm text-gray-700 text-center">{cat.name}</span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>

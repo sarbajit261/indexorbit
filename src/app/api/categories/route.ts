@@ -1,48 +1,39 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/db/prisma';
-import { cache } from 'react';
 
-// Cache categories
-const getCachedCategories = cache(async (slug?: string) => {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const limit = parseInt(searchParams.get('limit') || '12');
+  const type = searchParams.get('type') || undefined;
+
   const where: any = { status: 'PUBLISHED' };
-
-  if (slug) {
-    where.slug = slug;
+  if (type) {
+    const businessType = await prisma.businessType.findFirst({
+      where: { slug: type },
+      select: { id: true },
+    });
+    if (businessType) {
+      where.businessTypeId = businessType.id;
+    }
   }
 
   const categories = await prisma.category.findMany({
     where,
-    orderBy: { order: 'asc' },
     include: {
-      businessType: true,
+      businessType: {
+        select: { name: true, slug: true, icon: true, color: true },
+      },
       _count: {
-        select: { businesses: { where: { deletedAt: null } } },
+        select: { businesses: true },
       },
     },
+    orderBy: {
+      businesses: {
+        _count: 'desc',
+      },
+    },
+    take: limit,
   });
 
-  return categories;
-});
-
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const slug = searchParams.get('slug') || undefined;
-    const type = searchParams.get('type') || undefined;
-
-    let categories = await getCachedCategories(slug);
-
-    // If type is provided, filter categories by business type
-    if (type && !slug) {
-      categories = categories.filter(c => c.businessType.slug === type);
-    }
-
-    return NextResponse.json(categories);
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch categories' },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(categories);
 }

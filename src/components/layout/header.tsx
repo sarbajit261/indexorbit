@@ -51,19 +51,24 @@ interface Category {
   };
 }
 
-const navItems = [
+interface NavItem {
+  label: string;
+  href: string;
+  icon: any;
+  isMegaMenu?: boolean;
+}
+
+interface PopularSearch {
+  query: string;
+  icon: any;
+}
+
+const navItems: NavItem[] = [
   { label: 'Explore', href: '/businesses', icon: Compass },
   { label: 'Categories', href: '/business-category', icon: LayoutGrid, isMegaMenu: true },
   { label: 'Business Types', href: '/business-types', icon: LayoutGrid },
   { label: 'Offers', href: '/offers', icon: Tag },
   { label: 'News Updates', href: '/news', icon: Newspaper },
-];
-
-const popularSearches = [
-  { query: 'restaurants near me', icon: MapPin },
-  { query: 'hotels in downtown', icon: Building },
-  { query: 'best coffee shops', icon: Clock },
-  { query: '24 hour gyms', icon: Star },
 ];
 
 export function Header() {
@@ -75,23 +80,42 @@ export function Header() {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [businessTypes, setBusinessTypes] = useState<BusinessType[]>([]);
+  const [popularSearches, setPopularSearches] = useState<PopularSearch[]>([]);
   const [loadingMenu, setLoadingMenu] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Fetch categories and business types for mega menu
+  // Fetch categories, business types, popular searches, and settings
   useEffect(() => {
     async function fetchMenuData() {
       setLoadingMenu(true);
       try {
-        const [categoriesRes, typesRes] = await Promise.all([
+        const [categoriesRes, typesRes, settingsRes] = await Promise.all([
           fetch('/api/categories'),
           fetch('/api/business-types'),
+          fetch('/api/site-settings'),
         ]);
         const categoriesData = await categoriesRes.json();
         const typesData = await typesRes.json();
+        const settingsData = await settingsRes.json();
+
         setCategories(Array.isArray(categoriesData) ? categoriesData : []);
         setBusinessTypes(Array.isArray(typesData) ? typesData : []);
+
+        // Build popular searches from settings + fallback
+        if (settingsData.popularSearches && Array.isArray(settingsData.popularSearches)) {
+          setPopularSearches(settingsData.popularSearches.map((q: string) => ({
+            query: q,
+            icon: MapPin as any,
+          })));
+        } else {
+          setPopularSearches([
+            { query: 'restaurants near me', icon: MapPin },
+            { query: 'hotels in downtown', icon: Building },
+            { query: 'best coffee shops', icon: Clock },
+            { query: '24 hour gyms', icon: Star },
+          ]);
+        }
       } catch (error) {
         console.error('Failed to fetch menu data:', error);
       } finally {

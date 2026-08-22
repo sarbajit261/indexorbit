@@ -12,28 +12,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import Link from 'next/link';
 
-interface SearchResult {
-  id: string;
-  name: string;
-  slug: string;
-  shortDescription?: string;
-  logo?: string;
-  coverImage?: string;
-  city?: string;
-  state?: string;
-  rating?: number;
-  reviewCount?: number;
-  matchScore?: number;
-  matchReasons?: string[];
-}
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-  results?: SearchResult[];
-}
-
-const exampleQueries = [
+const FALLBACK_EXAMPLE_QUERIES = [
   'Find restaurants in New York with outdoor seating',
   'Hotels near Times Square with free breakfast',
   'Find a plumber in Austin open now',
@@ -43,14 +22,27 @@ const exampleQueries = [
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: "Hi! I'm your AI search assistant. Describe what you're looking for and I'll find the perfect businesses for you.\n\nTry saying things like:\n• \"Find restaurants in Austin with outdoor seating\"\n• \"Hotels in New York under $150\"\n• \"24-hour gyms near me\"",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [exampleQueries, setExampleQueries] = useState<string[]>(FALLBACK_EXAMPLE_QUERIES);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const res = await fetch('/api/site-settings');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.popularSearches && Array.isArray(data.popularSearches) && data.popularSearches.length > 0) {
+            setExampleQueries(data.popularSearches);
+          }
+        }
+      } catch {
+        // use fallbacks
+      }
+    }
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight);

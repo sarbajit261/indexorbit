@@ -328,7 +328,7 @@ export default function BusinessTypesPage() {
                 const Icon = getIcon(type.icon);
                 const gradientColor = getColor(type.color);
                 const categoryCount = type._count?.categories || 0;
-                const businessCount = type._count?.businesses || Math.floor(Math.random() * 200) + 50;
+                const businessCount = type._count?.businesses || 0;
 
                 return (
                   <Link key={type.id} href={`/business-types/${type.slug}`} className="block">
@@ -368,7 +368,7 @@ export default function BusinessTypesPage() {
                 const Icon = getIcon(type.icon);
                 const gradientColor = getColor(type.color);
                 const categoryCount = type._count?.categories || 0;
-                const businessCount = type._count?.businesses || Math.floor(Math.random() * 200) + 50;
+                const businessCount = type._count?.businesses || 0;
 
                 return (
                   <Link key={type.id} href={`/business-types/${type.slug}`} className="block">
