@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { FeaturedCarousel } from '@/components/home/featured-carousel';
 import { HeroSearch } from '@/components/home/hero-search';
 import prisma from '@/lib/db/prisma';
 
@@ -313,26 +312,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Featured Businesses Carousel */}
-      {featuredBusinesses.length > 0 && (
-        <section className="py-16 bg-gray-50">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900">Featured Businesses</h2>
-                <p className="text-gray-600 mt-2">Top-rated businesses in your area</p>
-              </div>
-              <Link href="/businesses">
-                <Button variant="outline" className="gap-2">
-                  View All <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-            <FeaturedCarousel businesses={featuredBusinesses} />
-          </div>
-        </section>
-      )}
 
       {/* Popular Categories */}
       {popularCategories.length > 0 && (
