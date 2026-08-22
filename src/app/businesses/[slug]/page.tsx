@@ -31,6 +31,7 @@ async function getBusiness(slug: string) {
       amenities: { include: { amenity: true } },
       facilities: { include: { facility: true } },
       gallery: { orderBy: { order: 'asc' } },
+      faqs: { orderBy: { order: 'asc' } },
     },
   });
 

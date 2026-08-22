@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapPin, Phone, Mail, Globe, Star, Clock, ExternalLink, Tag, CheckCircle, ArrowRight, Navigation, Eye, Heart, Bookmark, Share2, Flag, X, Send, Loader2, Camera, ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
+import { MapPin, Phone, Mail, Globe, Star, Clock, ExternalLink, Tag, CheckCircle, ArrowRight, Navigation, Eye, Heart, Bookmark, Share2, Flag, X, Send, Loader2, Camera, ChevronLeft, ChevronRight, AlertTriangle, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
@@ -40,6 +40,7 @@ interface BusinessData {
   amenities: { amenity: { name: string; icon: string | null } }[];
   facilities: { facility: { name: string; icon: string | null } }[];
   gallery: { id: string; url: string; caption: string | null }[];
+  faqs: { id: string; question: string; answer: string; order: number }[];
 }
 
 interface SimilarBusiness {
@@ -251,6 +252,18 @@ export function BusinessPageClient({ business, similarBusinesses, googleMapsUrl,
                   )}
                   {business.languages.length > 0 && <div><span className="text-gray-500">Languages:</span> {business.languages.join(', ')}</div>}
                 </div>
+
+                {/* FAQ Section */}
+                {business.faqs.length > 0 && (
+                  <div className="mt-8 pt-6 border-t">
+                    <h3 className="text-lg font-semibold mb-4">Frequently Asked Questions</h3>
+                    <div className="space-y-3">
+                      {business.faqs.map((faq) => (
+                        <FAQItem key={faq.id} faq={faq} />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -467,6 +480,27 @@ export function BusinessPageClient({ business, similarBusinesses, googleMapsUrl,
         </DialogContent>
       </Dialog>
 
+    </div>
+  );
+}
+
+function FAQItem({ faq }: { faq: { question: string; answer: string } }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border border-gray-200 rounded-lg overflow-hidden">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition"
+      >
+        <span className="font-medium text-sm text-gray-800">{faq.question}</span>
+        <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      {isOpen && (
+        <div className="px-4 py-3 bg-gray-50 border-t border-gray-200">
+          <p className="text-sm text-gray-600">{faq.answer}</p>
+        </div>
+      )}
     </div>
   );
 }
