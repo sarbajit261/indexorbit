@@ -92,13 +92,13 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-white text-gray-600 border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <footer className="bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Top row: Left (Logo + Desc + Contact + Social) + Nav columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left column */}
-          <div className="lg:col-span-3 space-y-5">
-            <Logo className="h-14 w-auto" />
+          <div className="lg:col-span-1 space-y-4">
+            <Logo className="h-12 w-auto" />
             <p className="text-sm text-gray-500 leading-relaxed">
               {settings?.footerBrandDesc ||
                 'Discover local businesses with AI-powered search. Find restaurants, hotels, shops, service providers, and more in your area.'}
@@ -132,7 +132,7 @@ export default function Footer() {
           </div>
 
           {/* Nav columns - right side */}
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-3">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
               {Object.entries(footerNavigation).map(([key, section]) => (
                 <div key={key}>
