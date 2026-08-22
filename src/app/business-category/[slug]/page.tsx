@@ -7,7 +7,7 @@ import { Search, MapPin, Star, ArrowRight, Building2, Utensils, Home, ShoppingBa
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import { ListingCard } from '@/components/business/listing-card';
 import { getOpeningStatus } from '@/lib/utils';
 

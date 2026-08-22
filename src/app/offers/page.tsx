@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import prisma from '@/lib/db/prisma';
 import { Tag, Percent, Clock, Gift, MapPin, Star, Bookmark, Zap, Flame, BadgeCheck, Sparkles, Globe, Smartphone, Phone, Mail, Ticket, ArrowRight, ChevronRight } from 'lucide-react';
 

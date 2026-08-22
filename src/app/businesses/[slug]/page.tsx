@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Phone, Mail, Globe, Star, Clock, ChevronLeft, ExternalLink, Tag, Award, CheckCircle, ArrowRight, Navigation, Eye, Heart, Bookmark, Share2, Flag, X, Send, Loader2 } from 'lucide-react';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import prisma from '@/lib/db/prisma';
 import type { Metadata } from 'next';
 import { BusinessPageClient } from './client';

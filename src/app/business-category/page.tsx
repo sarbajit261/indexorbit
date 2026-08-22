@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Building2, Utensils, Home, ShoppingBag, Wrench, Scissors, Dumbbell, Bus, Stethoscope, Briefcase, Palette, Car, GraduationCap, Plane, Heart, Coffee, Search, ArrowRight, Loader2, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 
 // Icon mapping
 const iconMap: Record<string, any> = {

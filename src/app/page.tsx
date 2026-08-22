@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import { FeaturedCarousel } from '@/components/home/featured-carousel';
 import { HeroSearch } from '@/components/home/hero-search';
 import prisma from '@/lib/db/prisma';

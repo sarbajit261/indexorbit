@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { MapPin, Star, ArrowRight, Utensils, Home, ShoppingBag, Wrench, Scissors, Dumbbell, Building, Clock, Heart, DollarSign, Shield, GraduationCap, Monitor, Megaphone, Briefcase, Factory, Package, Plane, Truck, Scale, Calculator, PartyPopper, Palette, Trophy, Dog, Tractor, Trees, Sofa, Smartphone, Shirt, Gem, Sparkles, Apple, Hammer, Zap, Wifi, Lock, Printer, Camera, PenTool, Church, Landmark, Droplets, Skull, Baby, Archive, Ship, Mountain, Recycle, Pill, Award, Users, Beaker, Wine, Hotel, Car, Globe, ChevronLeft, Loader2 } from 'lucide-react';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import { ListingCard } from '@/components/business/listing-card';
 
 const typeIcons: Record<string, any> = {

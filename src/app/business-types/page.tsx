@@ -6,7 +6,7 @@ import { Search, ArrowRight, Utensils, Home, ShoppingBag, Building, Wrench, Car,
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 
 interface BusinessType {
   id: string;

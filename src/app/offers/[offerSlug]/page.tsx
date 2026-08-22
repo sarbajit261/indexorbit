@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import { Clock, Star, MapPin, Phone, Globe, Mail, Smartphone, Ticket, Copy, Check, Calendar, Tag, Sparkles, Flame, BadgeCheck, Gift, Share2, Bookmark, ChevronRight, Users, Award, ExternalLink, ListChecks } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 

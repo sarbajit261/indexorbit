@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { BusinessCard } from '@/components/business/business-card';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import Link from 'next/link';
 
 const FALLBACK_EXAMPLE_QUERIES = [
