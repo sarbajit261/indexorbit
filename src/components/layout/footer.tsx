@@ -30,9 +30,7 @@ const footerNavigation = {
     links: [
       { label: 'All Businesses', href: '/businesses' },
       { label: 'Restaurants', href: '/business-category/restaurants' },
-      { label: 'Hotels', href: '/business-category/hotels' },
       { label: 'Shopping', href: '/business-category/shopping' },
-      { label: 'Services', href: '/business-category/services' },
       { label: 'Beauty', href: '/business-category/beauty' },
       { label: 'Fitness', href: '/business-category/fitness' },
     ],
