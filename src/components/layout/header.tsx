@@ -185,7 +185,7 @@ export function Header() {
           <div className="flex h-16 items-center justify-between gap-4">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
-              <Logo className="h-8 w-auto" asLink={false} />
+              <Logo className="h-12 w-auto" asLink={false} />
             </Link>
 
             {/* Desktop Navigation */}

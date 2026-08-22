@@ -14,7 +14,6 @@ import {
   Shield,
   Zap,
 } from 'lucide-react';
-import { Logo } from '@/components/Logo';
 import { useState } from 'react';
 
 export default function Footer() {
@@ -119,8 +118,8 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Newsletter + Logo + Contact Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-gray-100">
+        {/* Newsletter + Contact Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-12 border-b border-gray-100">
           {/* Newsletter */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">
@@ -158,11 +157,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Logo */}
-          <div className="flex items-center justify-center">
-            <Logo src="/Black Logo IO.png" className="h-20 w-auto" asLink={false} />
-          </div>
-
           {/* Contact */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Get in touch</h3>
@@ -187,7 +181,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} IndexOrbit. All rights reserved.
           </p>
