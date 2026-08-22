@@ -200,7 +200,7 @@ export default function BusinessCategoryPage() {
             </div>
             {filteredCategories.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500">No categories found for "{searchQuery}"</p>
+                <p className="text-gray-500">No categories found for &quot;{searchQuery}&quot;</p>
               </div>
             )}
           </section>

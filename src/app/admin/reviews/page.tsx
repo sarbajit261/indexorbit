@@ -39,11 +39,11 @@ export default async function AdminReviewsPage() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge variant={review.status === 'PUBLISHED' ? 'default' : 'secondary'}>
+                      <Badge variant={review.status === 'APPROVED' ? 'default' : 'secondary'}>
                         {review.status}
                       </Badge>
                       <span className="text-sm text-muted-foreground">
-                        by {review.user.name || review.user.email}
+                        by {review.user?.name || review.user?.email || 'Anonymous'}
                       </span>
                     </div>
                     <p className="font-medium">{review.title}</p>

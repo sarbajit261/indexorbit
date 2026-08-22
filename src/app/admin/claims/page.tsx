@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, CheckCircle, XCircle, Clock, Flag } from 'lucide-react';
 
 export default async function AdminClaimsPage() {
-  const claims = await prisma.businessClaim.findMany({
+  const claims = await prisma.claim.findMany({
     include: {
       business: true,
       user: true,

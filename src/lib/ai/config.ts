@@ -22,9 +22,10 @@ export const openai = new OpenAI({
 });
 
 // Lazy import for Anthropic to avoid build errors when not configured
-let anthropicClient: unknown = null;
+import type AnthropicSDK from '@anthropic-ai/sdk';
+let anthropicClient: InstanceType<typeof AnthropicSDK> | null = null;
 
-export async function getAnthropicClient() {
+export async function getAnthropicClient(): Promise<InstanceType<typeof AnthropicSDK> | null> {
   if (!anthropicClient && aiConfig.anthropic.apiKey) {
     try {
       const { Anthropic } = await import('@anthropic-ai/sdk');

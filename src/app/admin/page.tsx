@@ -294,7 +294,7 @@ export default async function AdminDashboard() {
                     {review.content}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    by {review.user.name} • {new Date(review.createdAt).toLocaleDateString()}
+                    by {review.user?.name ?? 'Anonymous'} • {new Date(review.createdAt).toLocaleDateString()}
                   </p>
                 </Link>
               ))}

@@ -121,7 +121,6 @@ export async function POST(request: NextRequest) {
           resultsCount: results.length,
           searchType: 'AI',
           userId: session.user.id,
-          aiParsed: true,
         },
       });
     }

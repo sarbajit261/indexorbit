@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { SearchSort } from '@/types';
 import { searchBusinesses, getFeaturedBusinesses, getBusinesses } from '@/lib/services/business';
 
 // Validation schema for search params
@@ -21,7 +22,7 @@ const searchSchema = z.object({
   hasOffers: z.coerce.boolean().optional(),
   hasServices: z.coerce.boolean().optional(),
   hasProducts: z.coerce.boolean().optional(),
-  sort: z.enum(['RELEVANCE', 'RATING', 'POPULARITY', 'DISTANCE', 'NEWEST', 'FEATURED']).optional(),
+  sort: z.enum(['RELEVANCE', 'RATING', 'POPULARITY', 'DISTANCE', 'NEWEST', 'FEATURED' as const]).optional(),
   page: z.coerce.number().min(1).default(1),
   limit: z.coerce.number().min(1).max(100).default(20),
 });
@@ -51,7 +52,7 @@ export async function GET(request: NextRequest) {
       hasOffers: validated.hasOffers,
       hasServices: validated.hasServices,
       hasProducts: validated.hasProducts,
-      sort: validated.sort,
+      sort: validated.sort as SearchSort | undefined,
       page: validated.page,
       limit: validated.limit,
     });

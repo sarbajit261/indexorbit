@@ -319,7 +319,7 @@ export function BusinessPageClient({ business, similarBusinesses, googleMapsUrl,
                         <p className="text-gray-600 text-sm">{review.content}</p>
                         {review.images?.length > 0 && (
                           <div className="flex gap-2 mt-2">
-                            {review.images.map((img, i) => (
+                            {review.images.map((img: string, i: number) => (
                               <Image key={i} src={img} alt="" width={60} height={60} className="rounded object-cover" />
                             ))}
                           </div>

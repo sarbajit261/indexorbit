@@ -1,4 +1,4 @@
-import type { MapProvider } from '@/types';
+import { MapProvider } from '@/types';
 
 // Map configuration
 export const mapConfig = {
@@ -16,7 +16,7 @@ export const mapConfig = {
 
 // Check if maps are configured
 export function isMapsConfigured(): boolean {
-  if (mapConfig.provider === 'mapbox') {
+  if (mapConfig.provider === MapProvider.MAPBOX) {
     return !!mapConfig.mapbox.accessToken;
   }
   return !!mapConfig.google.apiKey;

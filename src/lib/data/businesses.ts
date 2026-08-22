@@ -37,17 +37,13 @@ export async function getBusinessTypes() {
         },
       },
     });
-  }, [CACHE_KEYS.BUSINESS_TYPES])();
+  })();
 }
 
 /**
  * Get all published categories
  */
 export async function getCategories(businessTypeSlug?: string) {
-  const key = businessTypeSlug
-    ? `${CACHE_KEYS.CATEGORIES}-${businessTypeSlug}`
-    : CACHE_KEYS.CATEGORIES;
-
   return cache(async () => {
     const where: any = { status: 'PUBLISHED' };
 
@@ -65,7 +61,7 @@ export async function getCategories(businessTypeSlug?: string) {
         },
       },
     });
-  }, [key])();
+  })();
 }
 
 /**
@@ -82,8 +78,7 @@ export async function getBusinesses(params: {
 }) {
   const { type, category, location, search, page = 1, limit = 12, featured } = params;
 
-  return cache(async () => {
-    const where: any = { deletedAt: null };
+  const where: any = { deletedAt: null };
 
     // Filter by business type
     if (type && type !== 'all') {
@@ -148,7 +143,6 @@ export async function getBusinesses(params: {
         hasMore: page * limit < total,
       },
     };
-  }, [`${CACHE_KEYS.BUSINESSES}-${JSON.stringify(params)}`])(params);
 }
 
 /**
@@ -197,7 +191,7 @@ export async function getBusiness(slug: string) {
         },
       },
     });
-  }, [`${CACHE_KEYS.BUSINESS}-${slug}`])();
+  })();
 }
 
 /**
@@ -220,7 +214,7 @@ export async function getFeaturedBusinesses(limit: number = 10) {
       orderBy: { qualityScore: 'desc' },
       take: limit,
     });
-  }, [`${CACHE_KEYS.FEATURED}-${limit}`])();
+  })();
 }
 
 /**
@@ -240,7 +234,7 @@ export async function getTopRatedBusinesses(limit: number = 10) {
       orderBy: { rating: 'desc' },
       take: limit,
     });
-  }, [`top-rated-${limit}`])();
+  })();
 }
 
 /**
@@ -261,7 +255,7 @@ export async function getHomePageData() {
       topRated,
       categories,
     };
-  }, [CACHE_KEYS.HOME])();
+  })();
 }
 
 /**
@@ -344,5 +338,5 @@ export async function searchAll(query: string, limit: number = 10) {
       categories,
       locations: uniqueLocations,
     };
-  }, [`search-${query}`])();
+  })();
 }

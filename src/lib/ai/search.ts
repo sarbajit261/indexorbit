@@ -1,5 +1,7 @@
 import { openai, getAnthropicClient, getCurrentProvider, aiConfig } from './config';
-import type { ParsedAIQuery, SearchParams, SearchResult, AIProvider } from '@/types';
+import { AIProvider } from '@/types';
+import type { ParsedAIQuery, SearchParams, SearchResult } from '@/types';
+import { SearchSort } from '@/types';
 import { searchBusinesses, getBusinessBySlug } from '@/lib/services/business';
 
 // ============================================================================
@@ -208,7 +210,7 @@ export async function executeVisitorTool(
         const { results } = await searchBusinesses({
           location: args.location as string,
           businessType: args.businessType as string,
-          sort: 'RATING',
+          sort: SearchSort.RATING,
           limit: (args.limit as number) || 10,
         });
         return { success: true, data: results };
@@ -290,7 +292,7 @@ export async function parseUserQuery(userMessage: string): Promise<{
     };
   } else {
     // Anthropic implementation
-    const client = getAnthropicClient();
+    const client = await getAnthropicClient();
     if (!client) {
       throw new Error('Anthropic client not configured');
     }
@@ -300,6 +302,7 @@ export async function parseUserQuery(userMessage: string): Promise<{
       max_tokens: 1024,
       system: VISITOR_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userMessage }],
+      // @ts-expect-error - Anthropic tool format mismatch with our type definitions
       tools: Object.values(VISITOR_TOOLS).map((tool) => ({
         name: tool.name,
         description: tool.description,
@@ -311,7 +314,7 @@ export async function parseUserQuery(userMessage: string): Promise<{
       .filter((block) => block.type === 'tool_use')
       .map((block) => ({
         name: block.name as ToolName,
-        args: block.input,
+        args: block.input as Record<string, unknown>,
       }));
 
     const parsed = extractParsedQuery(userMessage);

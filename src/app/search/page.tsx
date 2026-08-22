@@ -111,7 +111,7 @@ export default function SearchPage() {
         </div>
         <h1 className="mb-2 text-3xl font-bold">AI-Powered Search</h1>
         <p className="text-muted-foreground">
-          Describe what you're looking for in natural language
+          Describe what you are looking for in natural language
         </p>
       </div>
 

@@ -110,7 +110,7 @@ const getCachedBusinesses = cache(async (params: {
       { qualityScore: 'desc' },
     ];
   } else if (sort === 'name') {
-    orderBy = { name: 'asc' };
+    orderBy = [{ name: 'asc' }];
   }
 
   const [businesses, total] = await Promise.all([
@@ -136,7 +136,7 @@ const getCachedBusinesses = cache(async (params: {
     const status = getBusinessStatus(b.hours);
     return {
       ...b,
-      coverImage: b.coverImage || b.image || null,
+      coverImage: b.coverImage || null,
       reviewCount: b._count?.reviews || 0,
       isOpen: status.isOpen,
       openTime: status.hours?.openTime ? formatTime(status.hours.openTime) : null,

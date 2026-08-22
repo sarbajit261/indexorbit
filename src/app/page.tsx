@@ -245,7 +245,7 @@ export default async function HomePage() {
               Discover Local Businesses
             </h1>
             <p className="text-lg md:text-xl text-white/90 mb-8">
-              IndexOrbit is the region's top business discovery platform
+              IndexOrbit is the region&apos;s top business discovery platform
             </p>
 
             {/* Large rounded search bar */}

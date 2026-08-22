@@ -1,9 +1,9 @@
 import prisma from '@/lib/db/prisma';
 import { slugify } from '@/lib/utils';
+import { SearchSort } from '@/types';
 import type {
   SearchParams,
   SearchResult,
-  SearchSort,
   Business,
   Category,
   Location,
@@ -97,30 +97,26 @@ export async function getBusinesses(params: SearchParams): Promise<{
   }
 
   // Sorting
-  let orderBy: Record<string, unknown> = {};
-  switch (sort) {
-    case SearchSort.RATING:
-      orderBy = { rating: 'desc' };
-      break;
-    case SearchSort.POPULARITY:
-      orderBy = { viewCount: 'desc' };
-      break;
-    case SearchSort.NEWEST:
-      orderBy = { createdAt: 'desc' };
-      break;
-    case SearchSort.FEATURED:
-      orderBy = [{ featuredStatus: 'desc' }, { rating: 'desc' }];
-      break;
-    case SearchSort.DISTANCE:
-      // For distance, we need to sort in memory after fetching
-      orderBy = { createdAt: 'desc' };
-      break;
-    default:
-      orderBy = [
-        { featuredStatus: 'desc' },
-        { rating: 'desc' },
-      ];
-  }
+  const orderBy = (() => {
+    switch (sort) {
+      case SearchSort.RATING:
+        return { rating: 'desc' };
+      case SearchSort.POPULARITY:
+        return { viewCount: 'desc' };
+      case SearchSort.NEWEST:
+        return { createdAt: 'desc' };
+      case SearchSort.FEATURED:
+        return [{ featuredStatus: 'desc' }, { rating: 'desc' }];
+      case SearchSort.DISTANCE:
+        // For distance, we need to sort in memory after fetching
+        return { createdAt: 'desc' };
+      default:
+        return [
+          { featuredStatus: 'desc' },
+          { rating: 'desc' },
+        ];
+    }
+  })() as any;
 
   const [businesses, total] = await Promise.all([
     prisma.business.findMany({
@@ -149,17 +145,16 @@ export async function getBusinesses(params: SearchParams): Promise<{
   ]);
 
   // Calculate distance if location provided
-  let results = businesses;
+  type BusinessWithDistance = typeof businesses[number] & { distance?: number };
+  let results: BusinessWithDistance[] = businesses;
   if (latitude && longitude) {
     results = businesses.map((b) => ({
       ...b,
       distance: calculateDistance(latitude, longitude, b.latitude || 0, b.longitude || 0),
-    })) as unknown as Business[];
+    }));
 
     if (sort === SearchSort.DISTANCE) {
-      results = (results as unknown as Array<Business & { distance: number }>).sort(
-        (a, b) => (a.distance || 0) - (b.distance || 0)
-      );
+      results = results.sort((a, b) => (a.distance || 0) - (b.distance || 0));
     }
   }
 
@@ -194,7 +189,7 @@ export async function getBusinessBySlug(slug: string): Promise<Business | null> 
       primaryLocation: true,
       owner: { select: { id: true, name: true, image: true } },
       branches: {
-        include: { businessBranchHours: true },
+        include: { hours: true },
       },
       services: {
         where: { status: 'PUBLISHED' },
@@ -274,7 +269,7 @@ export async function updateBusiness(
     data: {
       ...data,
       slug: data.name ? await ensureUniqueSlug(slugify(data.name), id) : undefined,
-    },
+    } as Parameters<typeof prisma.business.update>[0]['data'],
     include: {
       businessType: true,
       category: true,
@@ -422,7 +417,7 @@ export async function getLocations(params: {
 
 export async function getLocationByPath(pathSegments: string[]): Promise<Location | null> {
   let parentId: string | null = null;
-  let location: Location | null = null;
+  let location: unknown = null;
 
   for (const segment of pathSegments) {
     location = await prisma.location.findFirst({
@@ -430,10 +425,10 @@ export async function getLocationByPath(pathSegments: string[]): Promise<Locatio
     });
 
     if (!location) return null;
-    parentId = location.id;
+    parentId = (location as { id: string }).id;
   }
 
-  return location as unknown as Location | null;
+  return location as Location | null;
 }
 
 // ============================================================================

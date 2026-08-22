@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
       await prisma.searchEvent.create({
         data: {
           query: validated.q,
-          location: validated.location,
+          locationQuery: validated.location,
           filters: {
             type: validated.type,
             category: validated.category,

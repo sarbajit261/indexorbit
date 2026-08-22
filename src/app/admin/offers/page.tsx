@@ -42,16 +42,16 @@ export default async function AdminOffersPage() {
                         variant={
                           offer.status === 'PUBLISHED'
                             ? 'default'
-                            : offer.status === 'EXPIRED'
+                            : offer.status === 'SCHEDULED'
                             ? 'destructive'
                             : 'secondary'
                         }
                       >
                         {offer.status}
                       </Badge>
-                      {offer.discount && (
+                      {offer.discountValue && (
                         <span className="text-sm font-medium text-green-600">
-                          {offer.discount}% OFF
+                          {offer.discountValue}% OFF
                         </span>
                       )}
                     </div>
