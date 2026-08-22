@@ -318,6 +318,12 @@ export default async function HomePage() {
       {featuredBusinesses.length > 0 && (
         <section className="py-16 bg-gray-50">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900">Featured Businesses</h2>
+                <p className="text-gray-600 mt-2">Top-rated businesses recommended for you</p>
+              </div>
+            </div>
             <FeaturedCarousel businesses={featuredBusinesses} />
           </div>
         </section>
