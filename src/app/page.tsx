@@ -292,7 +292,7 @@ export default async function HomePage() {
           </div>
           <a href="/news" className="flex items-center gap-4">
             <div>
-              <div className="text-white font-bold text-2xl leading-tight">FOCUS</div>
+              <div className="text-white font-bold text-2xl leading-tight">NEWS & UPDATES</div>
             </div>
             <span className="bg-white text-[#0a897d] px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors whitespace-nowrap">
               Read now
