@@ -14,6 +14,7 @@ import {
   Shield,
   Zap,
 } from 'lucide-react';
+import { Logo } from '@/components/Logo';
 import { useState } from 'react';
 
 export default function Footer() {
@@ -72,7 +73,6 @@ export default function Footer() {
         { label: 'API Docs', href: '/api' },
         { label: 'Status', href: '/status' },
         { label: 'Changelog', href: '/changelog' },
-        { label: 'Documentation', href: '/docs' },
       ],
     },
     {
@@ -119,8 +119,8 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Newsletter + Contact Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pb-12 border-b border-gray-100">
+        {/* Newsletter + Logo + Contact Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-gray-100">
           {/* Newsletter */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">
@@ -140,23 +140,30 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="px-4 py-2.5 bg-[#0a897d] text-white text-sm font-medium rounded-lg hover:bg-[#086e65] transition-colors flex items-center gap-2"
+                className="px-4 py-2.5 bg-[#0a897d] text-white text-sm font-medium rounded-lg hover:bg-[#087a6f] transition-colors flex items-center gap-2"
               >
                 Subscribe
                 <ArrowRight className="h-4 w-4" />
               </button>
             </form>
+
+            {/* Trust Badges */}
             <div className="flex items-center gap-6 pt-2">
               {features.map((feature) => (
-                <div key={feature.text} className="flex items-center gap-2 text-gray-500">
+                <div key={feature.text} className="flex items-center gap-2 text-xs text-gray-500">
                   <feature.icon className="h-4 w-4 text-[#0a897d]" />
-                  <span className="text-xs">{feature.text}</span>
+                  {feature.text}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Contact Info */}
+          {/* Logo */}
+          <div className="flex items-center justify-center">
+            <Logo src="/Black Logo IO.png" className="h-20 w-auto" asLink={false} />
+          </div>
+
+          {/* Contact */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Get in touch</h3>
             <p className="text-sm text-gray-600">
