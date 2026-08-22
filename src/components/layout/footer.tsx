@@ -136,10 +136,10 @@ export default function Footer() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
               {Object.entries(footerNavigation).map(([key, section]) => (
                 <div key={key}>
-                  <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-2">
                     {section.title}
                   </h4>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1.5">
                     {section.links.map((link) => (
                       <li key={link.label}>
                         <Link
@@ -160,7 +160,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-400">
             &copy; {new Date().getFullYear()} {settings?.siteName || 'IndexOrbit'}. All rights reserved.
           </p>
