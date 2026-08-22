@@ -86,19 +86,17 @@ export default function Footer() {
         if (data.settings) {
           setSettings(data.settings);
         }
+        setLoading(false);
       })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      .catch(() => setLoading(false));
   }, []);
 
   return (
     <footer className="bg-white border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Top row: Left (Logo + Desc + Contact + Social) + Nav columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Left column */}
-          <div className="lg:col-span-1 space-y-4">
-            <Logo className="h-12 w-auto" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="space-y-4">
+            <Logo className="h-10 w-auto" />
             <p className="text-sm text-gray-500 leading-relaxed">
               {settings?.footerBrandDesc ||
                 'Discover local businesses with AI-powered search. Find restaurants, hotels, shops, service providers, and more in your area.'}
@@ -131,40 +129,34 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Nav columns - right side */}
-          <div className="lg:col-span-3">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-              {Object.entries(footerNavigation).map(([key, section]) => (
-                <div key={key}>
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2">
-                    {section.title}
-                  </h4>
-                  <ul className="space-y-1.5">
-                    {section.links.map((link) => (
-                      <li key={link.label}>
-                        <Link
-                          href={link.href}
-                          className="text-sm text-gray-500 hover:text-[#0a897d] transition-colors"
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+          {Object.entries(footerNavigation).map(([key, section]) => (
+            <div key={key}>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3">
+                {section.title}
+              </h3>
+              <ul className="space-y-2">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-500 hover:text-[#0a897d] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-gray-500">
             &copy; {new Date().getFullYear()} {settings?.siteName || 'IndexOrbit'}. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm text-gray-400">
+          <div className="flex items-center gap-6 text-sm text-gray-500">
             <Link href="/terms" className="hover:text-[#0a897d] transition-colors">
               Terms
             </Link>
