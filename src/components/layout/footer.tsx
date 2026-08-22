@@ -130,7 +130,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <Logo />
+              <Logo asLink={false} />
               <span className="text-xl font-bold text-white">
                 {settings?.siteName || 'IndexOrbit'}
               </span>
