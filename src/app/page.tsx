@@ -287,13 +287,12 @@ export default async function HomePage() {
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <p className="text-white text-lg font-semibold">
-              Read daily business news! <span className="text-gray-300">Find insights & stories from Dubai.</span>
+              Read daily business news! <span className="text-gray-300">Find insights & stories.</span>
             </p>
           </div>
           <a href="/news" className="flex items-center gap-4">
             <div>
               <div className="text-white font-bold text-2xl leading-tight">FOCUS</div>
-              <div className="text-gray-400 text-[10px] uppercase tracking-wider">Stories from Dubai</div>
             </div>
             <span className="bg-white text-[#0a897d] px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-100 transition-colors whitespace-nowrap">
               Read now
