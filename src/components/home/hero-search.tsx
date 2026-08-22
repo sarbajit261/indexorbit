@@ -41,20 +41,20 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-3xl mx-auto">
       <div className="relative flex items-center">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
         <Input
           type="text"
           placeholder="Search for businesses, services, or offers..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          className="flex-1 pl-12 pr-4 py-4 rounded-full text-gray-900 bg-white border-0 focus:ring-2 focus:ring-primary/50 text-lg"
+          className="flex-1 pl-14 pr-28 py-5 rounded-full text-gray-900 bg-white border-0 focus:ring-2 focus:ring-primary/50 text-lg shadow-lg"
         />
         <Button
           onClick={handleSearch}
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0a897d] hover:bg-[#0d6e6a]"
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0a897d] hover:bg-[#0d6e6a] px-6 py-2.5 font-medium"
         >
           Search
         </Button>
@@ -62,13 +62,13 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
           type="button"
           onClick={handleLocationClick}
           disabled={locating}
-          className="absolute right-24 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-[#0a897d] transition-colors disabled:opacity-50"
+          className="absolute right-[112px] top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-[#0a897d] transition-colors disabled:opacity-50"
           title="Use my current location"
         >
           {locating ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
-            <Locate className="h-4 w-4" />
+            <Locate className="h-5 w-5" />
           )}
         </button>
       </div>
