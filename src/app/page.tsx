@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Search, MapPin, Star, TrendingUp, ArrowRight, Phone, Mail, Globe, Clock, Utensils, Home, ShoppingBag, Wrench, Scissors, Dumbbell, Building, Stethoscope, Car, GraduationCap, Briefcase, Factory, Plane } from 'lucide-react';
+import { MapPin, Star, TrendingUp, ArrowRight, Phone, Mail, Globe, Clock, Utensils, Home, ShoppingBag, Wrench, Scissors, Dumbbell, Building, Stethoscope, Car, GraduationCap, Briefcase, Factory, Plane } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { FeaturedCarousel } from '@/components/home/featured-carousel';
+import { HeroSearch } from '@/components/home/hero-search';
 import prisma from '@/lib/db/prisma';
 
 // Demo images for different business types
@@ -276,25 +277,7 @@ export default async function HomePage() {
             </p>
 
             {/* Search Bar */}
-            <div className="relative max-w-2xl mx-auto mb-6">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
-              <Input
-                type="text"
-                placeholder="Search for businesses, services, or offers..."
-                className="w-full pl-12 pr-4 py-4 rounded-full text-gray-900 bg-white border-0 focus:ring-2 focus:ring-primary/50 text-lg"
-              />
-            </div>
-
-            {/* Location selector */}
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <MapPin className="h-4 w-4 text-white/60" />
-              <select className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/30">
-                <option value="">All Locations</option>
-                {popularLocations.map((loc) => (
-                  <option key={loc.slug} value={loc.slug} className="text-gray-900">{loc.name}</option>
-                ))}
-              </select>
-            </div>
+            <HeroSearch popularLocations={popularLocations} />
           </div>
         </div>
       </section>
