@@ -277,7 +277,7 @@ export default async function HomePage() {
             </p>
 
             {/* Search Bar */}
-            <HeroSearch popularLocations={popularLocations} />
+            <HeroSearch />
           </div>
         </div>
       </section>
