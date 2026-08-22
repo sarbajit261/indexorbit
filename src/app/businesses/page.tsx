@@ -9,7 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import Footer from '@/components/layout/footer';
 import { ListingCard } from '@/components/business/listing-card';
 import { FeaturedCard } from '@/components/business/featured-card';
 import { businessApi } from '@/lib/api/client';
