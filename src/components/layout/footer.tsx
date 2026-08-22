@@ -22,6 +22,7 @@ interface SiteSettings {
   socialInstagram: string | null;
   socialLinkedin: string | null;
   siteName: string;
+  footerBrandDesc: string | null;
 }
 
 const footerNavigation = {

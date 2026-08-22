@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Search, Star, Utensils, Home, ShoppingBag, Wrench, Scissors, Dumbbell, Building, X, ChevronLeft, ChevronRight, Loader2, Coffee, Car, Heart, Stethoscope, GraduationCap, Briefcase, Scale, Camera, Music, Hammer, ArrowRight } from 'lucide-react';
+import { Search, Star, Utensils, Home, ShoppingBag, Wrench, Scissors, Dumbbell, Building, X, ChevronLeft, ChevronRight, Loader2, Coffee, Car, Heart, Stethoscope, GraduationCap, Briefcase, Scale, Camera, Music, Hammer, ArrowRight, Plane } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -39,7 +39,7 @@ const getCategoryIcon = (iconName: string | null, businessTypeSlug: string) => {
     stethoscope: Stethoscope,
     'graduation-cap': GraduationCap,
     briefcase: Briefcase,
-    factory: Factory,
+    factory: Building,
     plane: Plane,
     building: Building,
     coffee: Coffee,

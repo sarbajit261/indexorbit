@@ -20,6 +20,12 @@ const FALLBACK_EXAMPLE_QUERIES = [
   'Gyms in Miami with a pool',
 ];
 
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+  results?: any[];
+}
+
 export default function SearchPage() {
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
