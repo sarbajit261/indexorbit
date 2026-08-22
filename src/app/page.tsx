@@ -3,6 +3,7 @@ import { Search, MapPin, Star, TrendingUp, ArrowRight, Phone, Mail, Globe, Clock
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { FeaturedCarousel } from '@/components/home/featured-carousel';
@@ -57,8 +58,6 @@ async function getLatestOffers() {
           verificationStatus: true,
         },
       },
-      businessType: true,
-      category: { select: { name: true, slug: true } },
     },
     orderBy: { createdAt: 'desc' },
     take: 6,
@@ -115,7 +114,7 @@ async function getPopularLocations() {
 
 async function getTopBusinessTypes() {
   const types = await prisma.businessType.findMany({
-    where: { isActive: true },
+    where: { status: 'PUBLISHED' },
     take: 8,
     orderBy: { name: 'asc' },
     include: {
@@ -230,9 +229,6 @@ function OfferCard({ offer }: { offer: any }) {
           >
             {offer.isFeatured ? '🔥 Featured' : offer.isExclusive ? '⭐ Exclusive' : 'Special'}
           </Badge>
-          <Badge variant="outline" className="text-xs">
-            {offer.category?.name}
-          </Badge>
         </div>
         <h4 className="font-semibold group-hover:text-primary transition-colors">
           {offer.title}
@@ -280,20 +276,14 @@ export default async function HomePage() {
             </p>
 
             {/* Search Bar */}
-            <form className="relative max-w-2xl mx-auto mb-6" onSubmit={(e) => { e.preventDefault(); if (searchQuery) router.push(`/search?q=${encodeURIComponent(searchQuery)}`); }}>
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="relative max-w-2xl mx-auto mb-6">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
               <Input
                 type="text"
                 placeholder="Search for businesses, services, or offers..."
                 className="w-full pl-12 pr-4 py-4 rounded-full text-gray-900 bg-white border-0 focus:ring-2 focus:ring-primary/50 text-lg"
               />
-              <Button
-                type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#0a897d] hover:bg-[#0d6e6a]"
-              >
-                Search
-              </Button>
-            </form>
+            </div>
 
             {/* Location selector */}
             <div className="flex items-center justify-center gap-2 mb-4">
