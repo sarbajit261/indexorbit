@@ -92,7 +92,7 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Logo />
+            <Logo className="h-12 w-auto" />
             <p className="mt-4 text-sm text-gray-500 leading-relaxed max-w-sm">
               {settings?.footerBrandDesc ||
                 'Discover local businesses with AI-powered search. Find restaurants, hotels, shops, service providers, and more in your area.'}
