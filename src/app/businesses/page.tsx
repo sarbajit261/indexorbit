@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense, useRef } from 'react';
+import { useState, useEffect, Suspense, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, Star, Utensils, Home, ShoppingBag, Wrench, Scissors, Dumbbell, Building, X, ChevronLeft, ChevronRight, Loader2, Coffee, Car, Heart, Stethoscope, GraduationCap, Briefcase, Scale, Camera, Music, Hammer, ArrowRight, Plane } from 'lucide-react';
@@ -123,7 +123,7 @@ function BusinessListContent() {
   }, []);
 
   // Fetch businesses
-  const fetchBusinesses = async (page = 1) => {
+  const fetchBusinesses = useCallback(async (page = 1) => {
     setLoading(true);
     try {
       const result = await businessApi.list({
@@ -139,7 +139,7 @@ function BusinessListContent() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedType, debouncedSearch]);
 
   useEffect(() => {
     fetchBusinesses(1);
