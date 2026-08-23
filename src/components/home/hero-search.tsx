@@ -7,11 +7,29 @@ interface HeroSearchProps {
   onSearch?: (query: string) => void;
 }
 
+async function reverseGeocode(lat: number, lng: number): Promise<string> {
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`, {
+      headers: { 'Accept-Language': 'en' },
+    });
+    if (!res.ok) return `${lat.toFixed(2)}, ${lng.toFixed(2)}`;
+    const data = await res.json();
+    const city = data.address?.city || data.address?.town || data.address?.village || data.address?.county || '';
+    const country = data.address?.country || '';
+    if (city && country) return `${city}, ${country}`;
+    if (city) return city;
+    return data.display_name?.split(',').slice(0, 2).join(',') || `${lat.toFixed(2)}, ${lng.toFixed(2)}`;
+  } catch {
+    return `${lat.toFixed(2)}, ${lng.toFixed(2)}`;
+  }
+}
+
 export function HeroSearch({ onSearch }: HeroSearchProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [locating, setLocating] = useState(false);
+  const [locationName, setLocationName] = useState('All Locations');
 
-  const handleLocationClick = () => {
+  const handleLocationClick = async () => {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser');
       return;
@@ -19,9 +37,10 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
 
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const { latitude, longitude } = position.coords;
-        alert(`Location detected: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+        const name = await reverseGeocode(latitude, longitude);
+        setLocationName(name);
         setLocating(false);
       },
       (error) => {
@@ -70,7 +89,7 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
           ) : (
             <MapPin className="h-5 w-5" />
           )}
-          <span className="text-sm font-medium whitespace-nowrap">All Locations</span>
+          <span className="text-sm font-medium whitespace-nowrap max-w-[180px] truncate">{locationName}</span>
         </button>
 
         {/* Search button */}
