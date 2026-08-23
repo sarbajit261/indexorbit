@@ -1,9 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Loader2, Locate } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Search, Loader2, MapPin } from 'lucide-react';
 
 interface HeroSearchProps {
   onSearch?: (query: string) => void;
@@ -23,7 +21,6 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        // Could be used to find nearest businesses via API in future
         alert(`Location detected: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
         setLocating(false);
       },
@@ -35,41 +32,54 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
   };
 
   const handleSearch = () => {
-    if (searchQuery.trim() && onSearch) {
-      onSearch(searchQuery.trim());
+    if (onSearch) {
+      onSearch(searchQuery);
     }
+    console.log('Searching for:', searchQuery);
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className="relative flex items-center">
-        <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
-        <Input
-          type="text"
-          placeholder="Search for businesses, services, or offers..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          className="flex-1 pl-14 pr-28 py-5 rounded-full text-gray-900 bg-white border-0 focus:ring-2 focus:ring-primary/50 text-lg shadow-lg"
-        />
-        <Button
-          onClick={handleSearch}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-[#0a897d] hover:bg-[#0d6e6a] px-6 py-2.5 font-medium"
-        >
-          Search
-        </Button>
+    <div className="w-full max-w-4xl mx-auto px-4">
+      <div className="flex items-center bg-white rounded-full shadow-lg h-16">
+        {/* Search icon + input */}
+        <div className="flex items-center flex-1 pl-5">
+          <Search className="h-5 w-5 text-gray-400 mr-3 flex-shrink-0" />
+          <input
+            type="text"
+            placeholder="Find food, spas, services, shops, ..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            className="w-full bg-transparent border-0 focus:outline-none focus:ring-0 text-gray-900 text-base placeholder:text-gray-400"
+          />
+        </div>
+
+        {/* Divider */}
+        <div className="h-8 w-px bg-gray-200 mx-2" />
+
+        {/* Location button */}
         <button
           type="button"
           onClick={handleLocationClick}
           disabled={locating}
-          className="absolute right-[112px] top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-[#0a897d] transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 px-4 h-full text-gray-500 hover:text-[#0a897d] transition-colors disabled:opacity-50 flex-shrink-0"
           title="Use my current location"
         >
           {locating ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
-            <Locate className="h-5 w-5" />
+            <MapPin className="h-5 w-5" />
           )}
+          <span className="text-sm font-medium whitespace-nowrap">All Locations</span>
+        </button>
+
+        {/* Search button */}
+        <button
+          onClick={handleSearch}
+          className="bg-[#0a897d] hover:bg-[#087a6f] text-white rounded-full px-6 py-2.5 font-medium flex items-center gap-2 transition-colors flex-shrink-0 mr-1.5"
+        >
+          <Search className="h-4 w-4" />
+          <span>Search</span>
         </button>
       </div>
     </div>
