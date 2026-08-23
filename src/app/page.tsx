@@ -406,15 +406,10 @@ export default async function HomePage() {
           <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
             {settings?.ctaDescription || 'List your business on IndexOrbit and reach thousands of potential customers looking for services like yours.'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Link href="/dashboard">
               <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                Get Started Free
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                Contact Sales
+                List your Business here
               </Button>
             </Link>
           </div>
