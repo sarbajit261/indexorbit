@@ -267,7 +267,7 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
         </div>
 
-        <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+        <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-24 md:py-40">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               {settings?.siteName || 'IndexOrbit'}
