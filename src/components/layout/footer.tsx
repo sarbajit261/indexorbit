@@ -161,7 +161,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Get in touch</h3>
             <p className="text-sm text-gray-600">
-              Have questions or feedback? We'd love to hear from you.
+              Have questions or feedback? We&apos;d love to hear from you.
             </p>
             <div className="space-y-3">
               <a href="mailto:hello@indexorbit.com" className="flex items-center gap-3 text-sm text-gray-600 hover:text-[#0a897d] transition-colors">
