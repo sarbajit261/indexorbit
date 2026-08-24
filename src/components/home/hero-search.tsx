@@ -28,14 +28,17 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [locating, setLocating] = useState(false);
   const [locationName, setLocationName] = useState('All Locations');
+  const [locationError, setLocationError] = useState<string | null>(null);
 
-  const handleLocationClick = async () => {
+  const handleLocationClick = () => {
     if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser');
+      setLocationError('Geolocation is not supported by your browser');
       return;
     }
 
     setLocating(true);
+    setLocationError(null);
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
@@ -44,9 +47,18 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
         setLocating(false);
       },
       (error) => {
-        console.error('Geolocation error:', error);
+        // Browsers report geolocation failures inconsistently; surface a
+        // useful summary instead of dumping the (often-empty) raw error.
+        const reason =
+          error?.code === 1 ? 'permission denied' :
+          error?.code === 2 ? 'position unavailable' :
+          error?.code === 3 ? 'request timed out' :
+          'unknown error';
+        console.warn(`Geolocation failed: ${reason}`);
+        setLocationError(`Couldn't get your location (${reason})`);
         setLocating(false);
-      }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
     );
   };
 
@@ -91,6 +103,11 @@ export function HeroSearch({ onSearch }: HeroSearchProps) {
           )}
           <span className="text-sm font-medium whitespace-nowrap max-w-[180px] truncate">{locationName}</span>
         </button>
+        {locationError && (
+          <span className="ml-3 text-xs text-red-500 whitespace-nowrap" role="status">
+            {locationError}
+          </span>
+        )}
 
         {/* Search button */}
         <button
